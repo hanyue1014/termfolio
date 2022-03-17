@@ -1,5 +1,6 @@
 <script setup>
 import { ref, onMounted } from 'vue';
+import Accented from './reusable/Accented.vue';
 
 let h1El = ref(null)
 
@@ -36,6 +37,8 @@ onMounted(() => {
       }
       window.requestAnimationFrame(pElAnim)
     } else {
+      // p element typing animation done
+      // tell parent to start listening to user's interaction
       emit('addListener')
     }
   }
@@ -72,17 +75,13 @@ onMounted(() => {
 <template>
   <div class="whole-body">
     <div class="greeter-card">
-      <h1 ref="h1El">Welcome, <span class="accented">User</span></h1>
+      <h1 ref="h1El">Welcome, <Accented>User</Accented></h1>
       <p ref="pEl">Press Any Key To Continue</p>
-      <input ref="keyCapturer" type="text" name="hidden" id="hidden">
     </div>
   </div>
 </template>
 
 <style scoped>
-input {
-  display: none; /* The user do not need to see the inputs of this component */
-}
 .whole-body {
   height: 100vh;
   display: flex;
@@ -111,10 +110,6 @@ p {
   /* margin-top: 3vh; */
   /* margin-right: 2ch; */
   margin: 3vh auto 0 auto;  /* margin right will be set to 2ch by code for aesthetic purposes */
-}
-
-.accented {
-  color: var(--accent);
 }
 
 h1, p {

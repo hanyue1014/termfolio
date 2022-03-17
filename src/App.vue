@@ -34,7 +34,7 @@ function nextPhase() {
   --text-color: hsla(156, 100%, 90%, 100%);
   --accent: hsla(179, 88%, 46%, 100%);
   --div-bg: hsla(204, 88%, 23%, 100%);
-  --bg: hsla(246, 71%, 14%, 100%);
+  --bg-or-btn-text: hsla(246, 71%, 14%, 100%);
 }
 
 * {
@@ -47,7 +47,7 @@ function nextPhase() {
   font-family: 'Ubuntu Mono', monospace;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background: var(--bg);
+  background: var(--bg-or-btn-text);
   color: var(--text-color);
   min-height: 100vh;
   margin: 0;
@@ -73,7 +73,7 @@ function nextPhase() {
 
 .nextphase-enter-from,
 .nextphase-leave-to {
-  transform: scale(0, 0);
+  transform: scale(0.5, 0.5);
   opacity: 0;
 }
 </style>
