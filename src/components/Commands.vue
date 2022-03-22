@@ -1,15 +1,23 @@
 <script setup>
 import CommandBtn from './reusable/CommandBtn.vue';
+
+const emit = defineEmits(['runCommand'])
+
+const btnCommands = ['about', 'contacts', 'skills', 'ls -R']
+
+function sendCommand(command) {
+  emit('runCommand', command)
+}
 </script>
 
 <template>
 <div class="commands">
   <h1>Commands</h1>
   <div class="command-btns">
-    <CommandBtn btn-text="about" />
-    <CommandBtn btn-text="contacts" />
-    <CommandBtn btn-text="skills" />
-    <CommandBtn btn-text="ls -R" />
+    <CommandBtn 
+      v-for="command in btnCommands"
+      :btn-text="command" 
+      @run-command="sendCommand" />
   </div>
 </div>
 </template>

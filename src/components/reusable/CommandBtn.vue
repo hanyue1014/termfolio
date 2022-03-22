@@ -1,10 +1,16 @@
 <script setup>
-defineProps(['btnText'])
+const props = defineProps(['btnText'])
+
+const emit = defineEmits(['runCommand'])
+
+function runCommand() {
+  emit('runCommand', props.btnText)
+}
 </script>
 
 <template>
 
-<button>{{ btnText }}</button>
+<button @click="runCommand">{{ btnText }}</button>
 
 </template>
 
@@ -22,7 +28,7 @@ button {
   transition: box-shadow 0.5s, transform 0.3s;
 }
 
-button:hover {
+button:hover, button:focus {
   box-shadow: 0 3px 8px hsla(180, 100%, 88%, 100%);
   transform: translateY(-5px);
 }

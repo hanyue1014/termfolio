@@ -1,15 +1,23 @@
 <script setup>
+import { ref } from 'vue';
+
 import Header from './Header.vue'
 import Commands from './Commands.vue';
 import MainInteraction from './MainInteraction.vue';
+
+const commands = ref([])
+
+function sendToOutput(command) {
+  commands.value.push(command)
+}
 </script>
 
 <template>
 <div class="container">
   <Header />
   <div  class="command-section-container">
-    <MainInteraction />
-    <Commands />
+    <MainInteraction :commands="commands" @run-command="sendToOutput" />
+    <Commands @run-command="sendToOutput" />
   </div>
 </div>
 </template>
