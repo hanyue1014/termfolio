@@ -3,7 +3,7 @@ import CommandBtn from './reusable/CommandBtn.vue';
 
 const emit = defineEmits(['runCommand'])
 
-const btnCommands = ['about', 'contacts', 'skills', 'ls -R']
+const btnCommands = ['about', 'contacts', 'skills', 'ls -Rl']
 
 function sendCommand(command) {
   emit('runCommand', command)

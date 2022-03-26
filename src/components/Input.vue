@@ -5,18 +5,27 @@ const emit = defineEmits(['runCommand'])
 
 const isFocus = ref(false)
 const isPressed = ref(false)
+const emptyError = ref(false)
 
 const commandTyped = ref('')
 
 function sendCommand() {
   if (!commandTyped.value) {
     // directly exit if the command typed is empty
-    alert('Please enter a command first')
+    // alert('Please enter a command first')
+    emptyError.value = true
     return
   }
 
   emit('runCommand', commandTyped.value)
   commandTyped.value = ''
+}
+
+function inputChanged() {
+  if (!!commandTyped.value) {
+    // the user has typed smtg, remove the errorempty class
+    emptyError.value = false
+  }
 }
 
 function simulatePress() {
@@ -28,7 +37,7 @@ function simulatePress() {
 </script>
 
 <template>
-<div class="input" :class="{focus: isFocus, pressed: isPressed}">
+<div class="input" :class="{focus: (isFocus && !emptyError), pressed: (isPressed && !emptyError), error: emptyError}">
   <!-- blur event fires when an element loses focus -->
   <input 
     type="text" 
@@ -37,7 +46,8 @@ function simulatePress() {
     v-model="commandTyped"
     @focus="() => isFocus = true" 
     @blur="() => isFocus = false" 
-    @keyup.enter="simulatePress">
+    @keyup.enter="simulatePress"
+    @input="inputChanged">
   <button 
     @focus="() => isFocus = true" 
     @blur="() => isFocus = false" 
@@ -62,6 +72,35 @@ function simulatePress() {
 .pressed {
     box-shadow: 0 2px 4px hsla(180, 100%, 88%, 100%);
     transform: translateY(0);
+}
+
+.error {
+  position: relative;
+  box-shadow: 0 4px 4px var(--error);
+}
+
+.error::before {
+  content: "Please type something";
+  position: absolute;
+  display: block;
+  padding: 15px;
+  font-size: 1.5em;
+  left: 20%;
+  background-color: var(--error);
+  border-radius: 15px;
+  animation: slide-in-from-btm .2s ease-in-out forwards;
+}
+
+@keyframes slide-in-from-btm {
+  from {
+    top: 0;
+    opacity: 0;
+  }
+
+  to {
+    top: -80%;
+    opacity: 1;
+  }
 }
 
 .input input {

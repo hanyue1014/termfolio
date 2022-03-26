@@ -1,11 +1,23 @@
 <script setup>
-import { onMounted } from 'vue';
+import { onMounted, shallowRef } from 'vue';
 import Accented from './Accented.vue';
+import LsOutputVue from './LsOutput.vue';
 
 const props = defineProps(['commandToRun'])
 const emit = defineEmits(['scrollDown'])
 
-console.log(props.commandToRun)
+const commandOutput = shallowRef(null)
+
+switch (props.commandToRun.trim()) {
+case 'ls -Rl':
+  commandOutput.value = LsOutputVue
+  break
+case 'ls -lR':
+  commandOutput.value = LsOutputVue
+  break
+default:
+  commandOutput.value = null
+}
 
 // tell the parent's container to scroll after this component is mounted and visible
 onMounted(() => {
@@ -14,8 +26,9 @@ onMounted(() => {
 </script>
 
 <template>
-<p>$ <Accented>{{ props.commandToRun }}</Accented></p>
-<p>unknown command: <Accented>{{ props.commandToRun }}</Accented></p>
+<p>$ <Accented>{{ commandToRun.trim() }}</Accented></p>
+<p v-if="!commandOutput">unknown command: <Accented>{{ commandToRun.trim() }}</Accented></p>
+<component v-else :is="commandOutput" />
 </template>
 
 <style scoped>

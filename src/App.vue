@@ -35,6 +35,7 @@ function nextPhase() {
   --accent: hsla(179, 88%, 46%, 100%);
   --div-bg: hsla(204, 88%, 23%, 100%);
   --bg-or-btn-text: hsla(246, 71%, 14%, 100%);
+  --error: hsla(345, 63%, 49%, 100%);
 }
 
 * {
