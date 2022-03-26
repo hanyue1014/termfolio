@@ -6,6 +6,7 @@ const emit = defineEmits(['runCommand'])
 const isFocus = ref(false)
 const isPressed = ref(false)
 const emptyError = ref(false)
+const errorPopUp = ref(false)
 
 const commandTyped = ref('')
 
@@ -14,6 +15,9 @@ function sendCommand() {
     // directly exit if the command typed is empty
     // alert('Please enter a command first')
     emptyError.value = true
+    errorPopUp.value = true
+    // close the pop up after 1s
+    setTimeout(() => { errorPopUp.value = false }, 2000)
     return
   }
 
@@ -25,6 +29,7 @@ function inputChanged() {
   if (!!commandTyped.value) {
     // the user has typed smtg, remove the errorempty class
     emptyError.value = false
+    errorPopUp.value = false  // if user inputted smtg, close the pop up early
   }
 }
 
@@ -37,7 +42,7 @@ function simulatePress() {
 </script>
 
 <template>
-<div class="input" :class="{focus: (isFocus && !emptyError), pressed: (isPressed && !emptyError), error: emptyError}">
+<div class="input" :class="{focus: (isFocus && !emptyError), pressed: (isPressed && !emptyError), error: emptyError, errorPopup: errorPopUp}">
   <!-- blur event fires when an element loses focus -->
   <input 
     type="text" 
@@ -79,7 +84,7 @@ function simulatePress() {
   box-shadow: 0 4px 4px var(--error);
 }
 
-.error::before {
+.errorPopup::before {
   content: "Please type something";
   position: absolute;
   display: block;

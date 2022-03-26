@@ -3,7 +3,7 @@ import CommandBtn from './reusable/CommandBtn.vue';
 
 const emit = defineEmits(['runCommand'])
 
-const btnCommands = ['about', 'contacts', 'skills', 'ls -Rl']
+const btnCommands = ['about', 'contacts', 'skills', 'projects', 'ls -Rl']
 
 function sendCommand(command) {
   emit('runCommand', command)
@@ -37,6 +37,6 @@ h1 {
 .command-btns {
   display: flex;
   flex-direction: column;
-  margin-top: 45%;
+  margin-top: 25%;
 }
 </style>
