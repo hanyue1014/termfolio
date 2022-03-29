@@ -1,6 +1,5 @@
 <script setup>
-import Accented from './Accented.vue';
-defineProps(['commandToRun'])
+import Accented from './reusable/Accented.vue';
 </script>
 
 <template>

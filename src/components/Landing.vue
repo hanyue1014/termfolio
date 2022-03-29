@@ -6,8 +6,6 @@ let h1El = ref(null)
 
 let pEl = ref(null)
 
-let keyCapturer = ref(null)
-
 let emit = defineEmits(['addListener'])
 
 onMounted(() => {
