@@ -51,11 +51,12 @@ function animateAddText(changeTo) {
       }
       window.requestAnimationFrame(addText)
     } else {
-      // do check if the user mouse left in between, change back to props.ori
-      if (mouseHasLeft.value) {
+      if (mouseHasLeft.value && textDisplay.value === props.hidden) {
+        // do check if the user mouse left in between and didnt comeback, change back to props.ori
         animateRemoveText(animateAddText, props.ori)
-        // reset back aboh will gt logic error
-        mouseHasLeft.value = false
+      } else if (!mouseHasLeft.value && textDisplay.value === props.ori) {
+        // if the mouse is still in but the text is still ori, make the animation and make it back to hidden
+        animateRemoveText(animateAddText, props.hidden)
       }
     }
   }
@@ -73,19 +74,24 @@ function mouseLeft() {
   // it is possible user's mouse has remained in the span, in that case, we just run removetext than add text agn to be sure 
   //(this can be tested by checking if the value of textDisplay is props.hidden)
   if (textDisplay.value === props.hidden) {
-    // reset the value first
-    mouseHasLeft.value = false
     animateRemoveText(animateAddText, props.ori)
   }
 }
 </script>
 
 <template>
-<span @mouseenter="changeText" @mouseleave="mouseLeft">{{ textDisplay }}</span>
+<div @mouseenter="changeText" @mouseleave="mouseLeft" >
+  <span>{{ textDisplay }}</span>
+</div>
 </template>
 
 <style scoped>
+div {
+  display: inline-block;
+}
+
 span {
   color: var(--accent);
+  /* display: inline-block;  for width to work with span */
 }
 </style>
