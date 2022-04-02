@@ -1,7 +1,7 @@
 <script setup>
 // README: there are still some logic error like it will animate non-stop if the user decided to leave for a while and hover back
 // however i think it will be quite interesting as a feature (YEP Its not a bug its a feature)
-import { ref } from 'vue';
+import { onMounted, ref } from 'vue';
 
 const props = defineProps(['ori', 'hidden'])
 
@@ -66,21 +66,32 @@ function animateAddText(changeTo) {
 
 function changeText() {
   mouseHasLeft.value = false
+  console.log('cnm entered')
   animateRemoveText(animateAddText, props.hidden)
 }
 
 function mouseLeft() {
-  mouseHasLeft.value = true
-  // it is possible user's mouse has remained in the span, in that case, we just run removetext than add text agn to be sure 
-  //(this can be tested by checking if the value of textDisplay is props.hidden)
-  if (textDisplay.value === props.hidden) {
-    animateRemoveText(animateAddText, props.ori)
+  // for some reason this method is always called when the user leaves their mouse in the div with the dev tools off
+  if (!mouseHasLeft.value) {
+    mouseHasLeft.value = true
+    console.log('cnm left')
+    // it is possible user's mouse has remained in the span, in that case, we just run removetext than add text agn to be sure 
+    //(this can be tested by checking if the value of textDisplay is props.hidden)
+    if (textDisplay.value === props.hidden) {
+      animateRemoveText(animateAddText, props.ori)
+    }
   }
 }
 </script>
 
+<!-- stability over bug, I will be setting the div's width to whichever the longest content is, 
+so the div's width won't be altered and the mouseenter and mouseleave event will be more stable -->
 <template>
-<div @mouseenter="changeText" @mouseleave="mouseLeft" >
+<div 
+  @mouseenter="changeText" 
+  @mouseleave="mouseLeft" 
+  :style="`width: ${Math.max(ori.length, hidden.length)}ch;`"
+>
   <span>{{ textDisplay }}</span>
 </div>
 </template>
@@ -92,6 +103,7 @@ div {
 
 span {
   color: var(--accent);
+  pointer-events: none;
   /* display: inline-block;  for width to work with span */
 }
 </style>
