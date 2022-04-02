@@ -1,7 +1,7 @@
 <script setup></script>
 
 <template>
-<h1>Termfolio</h1>
+<h1>Hanyue's Termfolio</h1>
 </template>
 
 <style scoped>

@@ -22,3 +22,6 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# place for me to arrange the resource I want to use, but not final
+res_arrange/*

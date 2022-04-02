@@ -20,10 +20,10 @@ function nextPhase() {
 
 <template>
 <Transition name="landing">
-  <Landing v-if="waitInteraction" @add-listener="addListenerForNextPhase"/>
+  <Landing v-show="waitInteraction" @add-listener="addListenerForNextPhase"/>
 </Transition>
 <Transition name="nextphase">
-  <Main v-if="!waitInteraction" />
+  <Main v-show="!waitInteraction" />
 </Transition>
 </template>
 

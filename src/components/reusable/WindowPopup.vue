@@ -40,7 +40,7 @@ function emitClose() {
   grid-template-columns: 10fr 1fr;
   align-items: center;
   margin: 0 auto;
-  padding: 1vh 0;
+  padding: 2vh 0px 1vh 0px;
   border-bottom: 2px solid var(--accent);
 }
 
