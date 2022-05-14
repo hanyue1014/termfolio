@@ -2,11 +2,11 @@
 import WindowPopup from './reusable/WindowPopup.vue'
 import Accented from './reusable/Accented.vue';
 import HoverSwitchText from './reusable/HoverSwitchText.vue';
-import HoverSwitchImage from './reusable/HoverSwitchImage.vue';
 
 // images to use
 import pfp from '../assets/pfp.jpg'
-import placeholder from '../assets/placeholder.png'
+import Accented1 from './reusable/Accented.vue';
+// import placeholder from '../assets/placeholder.png'
 
 const emits = defineEmits(['closeWindow'])
 
@@ -20,10 +20,10 @@ function emitClose() {
   <div class="about-content">
     <div class="hero">
       <div class="pfp">
-        <HoverSwitchImage :ori="pfp" :hidden="placeholder"/>
+        <img :src="pfp" alt="My profile pic LOL">
       </div>
       <div class="hero-desc">
-        <h1>I'm <HoverSwitchText ori="Hanyue" hidden="Xuan Bin"/></h1>
+        <h1>I'm <Accented>Hanyue</Accented></h1>
         <div>
           <p>A <Accented>student developer</Accented></p>
           <p>Based in <Accented>Penang</Accented></p>
@@ -50,7 +50,7 @@ function emitClose() {
 
 .pfp {
   width: 20%;
-  max-width: 190px;
+  max-width: 190px;  /* for some reason thrs a max width here but i actually forgot what is this for */
 }
 
 .hero-desc {

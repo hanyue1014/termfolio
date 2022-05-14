@@ -1,29 +1,68 @@
 <script setup>
-import { ref, shallowRef } from 'vue';
+import { computed, ref } from 'vue';
 
 import Header from './Header.vue'
 import Commands from './Commands.vue';
 import MainInteraction from './MainInteraction.vue';
 import About from './Abouts.vue'
+import Contacts from './Contacts.vue'
 
+const props = defineProps(['waitInteraction'])  // here for the App.vue (if App.vue wants interaction, don't show any window prematurely)
 const commands = ref([])
 
-const windowOpened = shallowRef(null)
+const routes = {
+  '/': null,
+  '/about': About,
+  '/contacts': Contacts,
+  '/skills': null,
+  '/projects': null
+}
 
-function openPopup(type) {
-  if (type === 'about') {
-    windowOpened.value = About
+const currentPath = ref('/' + window.location.href.split('/')[3])  // 0 is http 1 is empty (thr are 2 /s) 2 is the main page url
+
+// only open the window if it is a valid path (for my use case, the path length will be 4 atmost, see App.vue for details)
+if (window.location.href.split('/').length > 4) {
+  currentPath.value = '/'
+}
+
+const windowOpened = computed(() => {
+  if (!(routes[currentPath.value || '/'])) {
+    // still, if it is undefined I would like to keep the url at root level just to be safe
+    history.pushState(
+      {},
+      null,
+      '/'
+    )
+    // reset the currentpath value as this computed depends on it to work
+    currentPath.value = '/' + window.location.href.split('/')[3]
   }
-  // do ntg if the command wan open eh stff is unknown
+  // safeguard in case the user went to some existed route but wanna show the user the "press to continue page"
+  console.log(props.waitInteraction)
+  return props.waitInteraction ? null : routes[currentPath.value || '/']
+})
+
+function changeLink(link) {
+  history.pushState(
+    {},
+    null,
+    link
+  )
+  currentPath.value = '/' + window.location.href.split('/')[3]
 }
 
 function sendToOutput(command) {
   commands.value.push(command)
-  openPopup(command)
+  changeLink(command)
 }
 
 function closeWindow() {
-  windowOpened.value = null
+  history.pushState(
+    {},
+    null,
+    '/'
+  )
+  // for now i have to refresh the currentpath thing manually
+  currentPath.value = '/' + window.location.href.split('/')[3]
 }
 </script>
 

@@ -10,8 +10,8 @@ function emitClose() {
 <template>
 <div class="popup">
   <div class="title">
-    <h1 id="title">{{ windowTitle }}</h1>
-    <span id="close" @click="emitClose">&times;</span>
+    <h1 id="title">Viewing: {{ windowTitle }}</h1>
+    <span id="close" @click="emitClose">X CLOSE</span>
   </div>
   <div class="content">
     <slot></slot>
@@ -37,7 +37,7 @@ function emitClose() {
 .title {
   display: grid;
   width: 90%;
-  grid-template-columns: 10fr 1fr;
+  grid-template-columns: 6fr 4fr;
   align-items: center;
   margin: 0 auto;
   padding: 2vh 0px 1vh 0px;
@@ -49,17 +49,21 @@ function emitClose() {
 }
 
 #close {
-  font-size: 2.5em;
+  font-size: 2em;
   margin-left: auto;
-  width: 50%;
+  width: auto;
+  padding: 5px 18px;
   text-align: center;
+  color: var(--error);
   cursor: pointer;
   transition: .3s ease;
-  border-radius: 10px;
+  border-radius: 15px;
+  border: 2px solid var(--error)
 }
 
 #close:hover {
   background-color: var(--error);
+  color: var(--text-color);
 }
 
 .content {
