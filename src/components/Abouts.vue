@@ -1,7 +1,6 @@
 <script setup>
 import WindowPopup from './reusable/WindowPopup.vue'
 import Accented from './reusable/Accented.vue';
-import HoverSwitchText from './reusable/HoverSwitchText.vue';
 
 // images to use
 import pfp from '../assets/pfp.jpg'
